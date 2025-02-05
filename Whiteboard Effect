@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: transparent;
+        }
+        .card {
+            position: absolute;
+            width: 200px;
+            height: 150px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: grab;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card" id="card1">Drag me!</div>
+    <div class="card" id="card2">Move me!</div>
+    <div class="card" id="card3">Place me anywhere!</div>
+
+    <script>
+        const cards = document.querySelectorAll('.card');
+
+        cards.forEach(card => {
+            let isDragging = false;
+            let offsetX, offsetY;
+
+            card.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                offsetX = e.clientX - card.getBoundingClientRect().left;
+                offsetY = e.clientY - card.getBoundingClientRect().top;
+                card.style.cursor = 'grabbing';
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    card.style.left = `${e.clientX - offsetX}px`;
+                    card.style.top = `${e.clientY - offsetY}px`;
+                }
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+                card.style.cursor = 'grab';
+            });
+        });
+    </script>
+</body>
+</html>
